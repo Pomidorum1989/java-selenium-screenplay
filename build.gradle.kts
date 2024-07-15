@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("checkstyle")
 }
 
 group = "io.dorum"
@@ -29,6 +30,11 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
+}
+
+checkstyle {
+    toolVersion = "10.12.4"
+    config = project.resources.text.fromFile(file("src/main/resources/checkstyle-sun.xml"))
 }
 
 tasks.withType<JavaCompile> {
