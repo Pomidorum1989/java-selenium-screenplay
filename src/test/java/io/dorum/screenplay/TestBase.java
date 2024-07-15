@@ -1,12 +1,12 @@
 package io.dorum.screenplay;
 
 import io.dorum.screenplay.abilities.BrowseTheWeb;
-import io.dorum.screenplay.abilities.DatabaseConnection;
 import io.dorum.screenplay.tasks.CloseBrowser;
 import org.apache.logging.log4j.ThreadContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import utils.ThreadLocalWebDriver;
+import utils.BrowserFactory;
+import utils.Config;
 
 import java.sql.SQLException;
 
@@ -17,7 +17,7 @@ public class TestBase {
     public void beforeMethod() throws SQLException {
         ThreadContext.put("threadName", String.valueOf(Thread.currentThread().threadId()));
         actorThreadLocal.set(new Actor("Tester"));
-        getActor().can(BrowseTheWeb.with(ThreadLocalWebDriver.getDriver()));
+        getActor().can(BrowseTheWeb.with(BrowserFactory.createDriver(Config.getBrowser())));
 //        getActor().can(new DatabaseConnection("", "", ""));
     }
 

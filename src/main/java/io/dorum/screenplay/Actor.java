@@ -10,8 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Actor {
     @Getter
-    private String name;
-    private Map<Class<? extends Ability>, Ability> abilities = new ConcurrentHashMap<>();
+    private final String name;
+    private final Map<Class<? extends Ability>, Ability> abilities = new ConcurrentHashMap<>();
 
     public Actor(String name) {
         this.name = name;

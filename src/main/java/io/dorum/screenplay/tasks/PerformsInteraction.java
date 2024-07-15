@@ -4,7 +4,7 @@ import io.dorum.screenplay.Actor;
 import io.dorum.screenplay.interactions.Interaction;
 
 public class PerformsInteraction<T> implements Task<T> {
-    private Interaction<T> interaction;
+    private final Interaction<T> interaction;
 
     public PerformsInteraction(Interaction<T> interaction) {
         this.interaction = interaction;
