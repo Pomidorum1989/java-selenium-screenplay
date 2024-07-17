@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 @Log4j2
-public class ExecuteQuery implements Task {
+public class ExecuteQuery implements Task<Void> {
     private final String query;
 
     public ExecuteQuery(String query) {

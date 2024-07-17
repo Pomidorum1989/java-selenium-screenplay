@@ -22,6 +22,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     implementation("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
     // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
     implementation("io.github.bonigarcia:webdrivermanager:5.9.1")
 }
