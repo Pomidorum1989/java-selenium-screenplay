@@ -1,11 +1,12 @@
-package io.dorum.screenplay.tasks;
+package io.dorum.screenplay.interactions.webelements;
 
 import io.dorum.screenplay.Actor;
-import io.dorum.screenplay.abilities.BrowseTheWeb;
+import io.dorum.screenplay.abilities.CreateDriver;
+import io.dorum.screenplay.interactions.Interaction;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class OpenBrowser implements Task<Void> {
+public class OpenBrowser implements Interaction<Void> {
     private final String url;
 
     public OpenBrowser(String url) {
@@ -14,11 +15,11 @@ public class OpenBrowser implements Task<Void> {
 
     @Override
     public void performAs(Actor actor) {
-        actor.abilityTo(BrowseTheWeb.class).getDriver().get(url);
-        log.info("Website {} was opened", url);
+        actor.abilityTo(CreateDriver.class).getWebdriver().get(url);
     }
 
     public static OpenBrowser at(String url) {
+        log.info("Website {} was opened", url);
         return new OpenBrowser(url);
     }
 }

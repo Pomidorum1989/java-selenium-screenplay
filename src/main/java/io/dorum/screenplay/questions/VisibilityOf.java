@@ -1,15 +1,14 @@
 package io.dorum.screenplay.questions;
 
 import io.dorum.screenplay.Actor;
-import io.dorum.screenplay.abilities.BrowseTheWeb;
+import io.dorum.screenplay.abilities.CreateDriver;
+import io.dorum.screenplay.interactions.webelements.Wait;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import utils.WaitUtils;
 
 @Log4j2
 public class VisibilityOf implements Question<Boolean> {
-    private By locator;
+    private final By locator;
 
     public VisibilityOf(By locator) {
         this.locator = locator;
@@ -17,8 +16,8 @@ public class VisibilityOf implements Question<Boolean> {
 
     @Override
     public Boolean answeredBy(Actor actor) {
-        WebElement element = new WaitUtils(actor.abilityTo(BrowseTheWeb.class).getDriver()).waitForElementToBeVisible(locator);
-        Boolean isDisplayed = element.isDisplayed();
+        actor.interactsWith(Wait.untilVisible(locator));
+        boolean isDisplayed = actor.abilityTo(CreateDriver.class).getWebdriver().findElement(locator).isDisplayed();
         log.info("{} is visible: {}", locator, isDisplayed);
         return isDisplayed;
     }

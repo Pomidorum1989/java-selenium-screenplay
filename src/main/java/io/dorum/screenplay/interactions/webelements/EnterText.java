@@ -1,11 +1,10 @@
-package io.dorum.screenplay.interactions;
+package io.dorum.screenplay.interactions.webelements;
 
 import io.dorum.screenplay.Actor;
-import io.dorum.screenplay.abilities.BrowseTheWeb;
+import io.dorum.screenplay.abilities.CreateDriver;
+import io.dorum.screenplay.interactions.Interaction;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import utils.WaitUtils;
 
 @Log4j2
 public class EnterText implements Interaction<Void> {
@@ -19,8 +18,8 @@ public class EnterText implements Interaction<Void> {
 
     @Override
     public void performAs(Actor actor) {
-        WebElement element = new WaitUtils(actor.abilityTo(BrowseTheWeb.class).getDriver()).waitForElementToBeVisible(locator);
-        element.sendKeys(text);
+        actor.interactsWith(Wait.untilClickable(locator));
+        actor.abilityTo(CreateDriver.class).getWebdriver().findElement(locator).sendKeys(text);
     }
 
     public static EnterText in(By locator, String text) {

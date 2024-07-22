@@ -1,18 +1,26 @@
-package utils;
+package io.dorum.screenplay.abilities;
 
+import com.epam.reportportal.annotations.Step;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 @Log4j2
-public class BrowserFactory {
+@Getter
+@AllArgsConstructor
+public class CreateDriver implements Ability {
+
+    private WebDriver webdriver;
+
+    public static CreateDriver of(String browserName) {
+        WebDriver webdriver = createDriver(browserName);
+        return new CreateDriver(webdriver);
+    }
 
     @Getter
     @AllArgsConstructor
@@ -33,6 +41,7 @@ public class BrowserFactory {
         }
     }
 
+    @Step("Driver creation {browserType}")
     public static WebDriver createDriver(String browserType) {
         WebDriver driver;
         WebDriverManager webDriverManager;

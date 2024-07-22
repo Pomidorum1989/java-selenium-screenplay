@@ -1,10 +1,10 @@
-package io.dorum.screenplay.interactions;
+package io.dorum.screenplay.interactions.webelements;
 
 import io.dorum.screenplay.Actor;
-import io.dorum.screenplay.abilities.BrowseTheWeb;
+import io.dorum.screenplay.abilities.CreateDriver;
+import io.dorum.screenplay.interactions.Interaction;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
-import utils.WaitUtils;
 
 @Log4j2
 public class ClickElement implements Interaction<Void> {
@@ -16,7 +16,8 @@ public class ClickElement implements Interaction<Void> {
 
     @Override
     public void performAs(Actor actor) {
-        new WaitUtils(actor.abilityTo(BrowseTheWeb.class).getDriver()).waitForElementToBeClickable(locator).click();
+        actor.interactsWith(Wait.untilClickable(locator));
+        actor.abilityTo(CreateDriver.class).getWebdriver().findElement(locator).click();
     }
 
     public static ClickElement on(By locator) {

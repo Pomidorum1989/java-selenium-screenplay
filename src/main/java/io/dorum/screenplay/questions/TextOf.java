@@ -1,15 +1,14 @@
 package io.dorum.screenplay.questions;
 
 import io.dorum.screenplay.Actor;
-import io.dorum.screenplay.abilities.BrowseTheWeb;
+import io.dorum.screenplay.abilities.CreateDriver;
+import io.dorum.screenplay.interactions.webelements.Wait;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import utils.WaitUtils;
 
 @Log4j2
 public class TextOf implements Question<String> {
-    private By locator;
+    private final By locator;
 
     public TextOf(By locator) {
         this.locator = locator;
@@ -17,8 +16,8 @@ public class TextOf implements Question<String> {
 
     @Override
     public String answeredBy(Actor actor) {
-        WebElement element = new WaitUtils(actor.abilityTo(BrowseTheWeb.class).getDriver()).waitForElementToBeVisible(locator);
-        String text = element.getText();
+        actor.interactsWith(Wait.untilVisible(locator));
+        String text = actor.abilityTo(CreateDriver.class).getWebdriver().findElement(locator).getText();
         log.info("{} text was returned", text);
         return text;
     }
